@@ -20,7 +20,7 @@ public class EventQueue{
 
 		else{
 			for (int i = 1; i < EventQueue.size(); i++){
-				 if (EvenetQueue.get(i-1).time() < e.time() && EvenetQueue.get(i+1).time() >= e.time()){
+				 if (EvenetQueue.get(i-1).time() <= e.time() && EvenetQueue.get(i+1).time() >= e.time()){
 					 EvenetQueue.add(i, e);
 				 }
 			}
