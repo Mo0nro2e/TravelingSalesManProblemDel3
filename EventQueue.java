@@ -1,12 +1,24 @@
 import java.util.ArrayList;
-public class EventQueue{
+import java.util.Iterator;
+import java.util.Iterable;
+public class EventQueue implements Iterable<Event>  {
+	private class EventQueueIterator implements Iterable<Event> {
+		private Event[] currenQuene;
+		private int index;
+
+		public Iterator<Event> iterator() {
+			currenQuene = eventQueue;
+			index = 0;
+			return eventQueue.iterator();
+  	}
+	}
 	//Attributes
 	private ArrayList<Event> eventQueue;
 
 
 	//Constructor
 	public EventQueue(){
-		eventQueue = new ArrayList<Event>();
+		this.eventQueue = new ArrayList<Event>();
 	}
 
 	// adds a new event to the queue
@@ -39,6 +51,9 @@ public class EventQueue{
 	public boolean hasNext(){
 		return eventQueue.isEmpty();
 	}
+
+
+
 
 
 
