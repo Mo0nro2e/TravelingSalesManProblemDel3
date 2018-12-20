@@ -5,10 +5,12 @@ public class Maintester {
 		CityGenerator c = new CityGenerator();
 		City[] listOfCities = c.generate();
 		EventQueue eQueue = new EventQueue();
-		//Iterator<Event> hov = new EventQueue.iterator();
+		Population pop = new Population(0.001);
+
 		for(int i = 0; i < 50; i++){
 			double x = (Math.random()*((250-1)+1))+1;
 			Individual indi = new Individual(listOfCities);
+			pop.add(indi);
 			Event Death = new Event('D', x, indi);
 			eQueue.add(Death);
 			double x1 = (Math.random()*((250-1)+1))+1;
@@ -18,10 +20,15 @@ public class Maintester {
 			Event mutate = new Event('M', x1, indi);
 			eQueue.add(mutate);
 		}
-
-		for(Event ups: eQueue){
-			System.out.println(ups);
+		City[] vgh = new City[25];
+		vgh = pop.bestPath();
+		for(int i = 0; i<vgh.length; i++){
+			System.out.println(vgh[i].name());
 		}
+
+		/*for(Event ups: eQueue){
+			System.out.println(ups);
+		}*/
 	}
 
 }

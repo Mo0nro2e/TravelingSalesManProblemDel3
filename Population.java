@@ -35,7 +35,7 @@ public class Population{
 
 		else{
 			boolean isAdded = false;
-			int j = 0;
+			int j = 1;
 			while(j < population.size() && isAdded == false){
 				if(fit(omega, costMin, i) > fit(omega, costMin, population.get(j-1)) && fit(omega, costMin, i) < fit(omega, costMin, population.get(j))){
 					population.add(j,i);
@@ -45,8 +45,9 @@ public class Population{
 					}
 					isAdded = true;
 				}
+				j++;
 			}
-			j++;
+
 		}
 	}
 
