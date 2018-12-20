@@ -20,7 +20,7 @@ public class Maintester {
 		}
 
 		for(Event ups: eQueue){
-			System.out.println(ups.next());
+			System.out.println(ups);
 		}
 	}
 

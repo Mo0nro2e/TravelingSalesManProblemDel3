@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.Iterator;
-public class EventQueue implements Iterator<Event>  {
+public class EventQueue implements Iterable<Event>  {
 	private class EventQueueIterator implements Iterator<Event> {
 		private int index = 0;
 
@@ -43,7 +43,7 @@ public class EventQueue implements Iterator<Event>  {
 			int i = 1;
 			boolean isAdded = false;
 			while (i < eventQueue.size() && isAdded == false){
-				if (eventQueue.get(i-1).time() <= e.time() && eventQueue.get(i+1).time() >= e.time()){
+				if (eventQueue.get(i-1).time() <= e.time() && eventQueue.get(i).time() >= e.time()){
 				 eventQueue.add(i, e);
 				 isAdded = true;
 				}
