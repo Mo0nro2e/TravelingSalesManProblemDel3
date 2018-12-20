@@ -29,6 +29,7 @@ public class Population{
 			population.add(0,i);
 			if(i.cost() < costMin){
 				costMin = i.cost();
+				bestPath = i.path();
 			}
 		}
 
@@ -38,6 +39,10 @@ public class Population{
 			while(j < population.size() && isAdded == false){
 				if(fit(omega, costMin, i) > fit(omega, costMin, population.get(j-1)) && fit(omega, costMin, i) < fit(omega, costMin, population.get(j))){
 					population.add(j,i);
+					if(population.get(j).cost() < costMin){
+						costMin = population.get(j).cost();
+						bestPath = population.get(j).path();
+					}
 					isAdded = true;
 				}
 			}
@@ -68,7 +73,9 @@ public class Population{
 			population.remove(i);
 		}
 		for(int i = population.size()+5; i < population.size(); i++){
-			Math.pow(fit(population.get(i)),2) //somthing somthing
+			if(RandomUtils.getRandomEvent(Math.pow(fit(omega, costMin, population.get(i)),2)) == true){
+				population.remove(i);
+			}
 		}
 	}
 
