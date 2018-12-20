@@ -1,8 +1,11 @@
 import java.util.*;
 public class Maintester {
-	static City[] listOfCities;
+
 	public static void main(String[] args) {
+		CityGenerator c = new CityGenerator();
+		City[] listOfCities = c.generate();
 		EventQueue eQueue = new EventQueue();
+		//Iterator<Event> hov = new EventQueue.iterator();
 		for(int i = 0; i < 50; i++){
 			double x = (Math.random()*((250-1)+1))+1;
 			Individual indi = new Individual(listOfCities);

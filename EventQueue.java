@@ -1,16 +1,25 @@
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Iterable;
-public class EventQueue implements Iterable<Event>  {
-	private class EventQueueIterator implements Iterable<Event> {
-		private Event[] currenQuene;
-		private int index;
+public class EventQueue implements Iterator<Event>  {
+	private class EventQueueIterator implements Iterator<Event> {
+		private int index = 0;
 
-		public Iterator<Event> iterator() {
-			currenQuene = eventQueue;
-			index = 0;
-			return eventQueue.iterator();
-  	}
+
+	  // The next three methods implement Iterator.
+	  public boolean hasNext() {
+	    if (index < EventQueue.this.eventQueue.size()){
+	      return true;
+	    }
+	    return false;
+	  }
+
+	  public Event next() {
+	    if (hasNext() == false)
+	      System.out.println("No more elementes");
+	    index++;
+	    return EventQueue.this.eventQueue.get(index - 1);
+	  }
+
 	}
 	//Attributes
 	private ArrayList<Event> eventQueue;
@@ -51,6 +60,12 @@ public class EventQueue implements Iterable<Event>  {
 	public boolean hasNext(){
 		return eventQueue.isEmpty();
 	}
+
+	// This method implements Iterable.
+	public Iterator<Event> iterator() {
+		return new EventQueueIterator();
+	}
+
 
 
 
