@@ -7,7 +7,7 @@ public class Maintester {
 		EventQueue eQueue = new EventQueue();
 		Population pop = new Population(0.001);
 
-		for(int i = 0; i < 50; i++){
+		for(int i = 0; i < 150; i++){
 			double x = (Math.random()*((250-1)+1))+1;
 			Individual indi = new Individual(listOfCities);
 			pop.add(indi);
@@ -22,8 +22,10 @@ public class Maintester {
 		}
 		City[] vgh = new City[25];
 		vgh = pop.bestPath();
-		for(int i = 0; i<vgh.length; i++){
-			System.out.println(vgh[i].name());
+
+		for(int i = 0; i<pop.size(); i++){
+
+			System.out.println(pop.fitness(pop.getIndividual(i)));
 		}
 
 		/*for(Event ups: eQueue){

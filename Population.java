@@ -10,13 +10,10 @@ public class Population{
 		this.population = new ArrayList<Individual>();
 		this.omega = omega;
 	}
-
-		private double fit(double omega, double costMin, Individual i){
-			double fitness;
-			fitness = (omega + (Math.pow((costMin/i.cost()),2)))/(1+(2*omega));
-			return fitness;
-		}
-
+ 
+	public Individual getIndividual(int i){
+		return population.get(i);
+	}
 
 	// adds i to this population
 	public  void add(Individual i){
@@ -25,7 +22,7 @@ public class Population{
 			costMin = i.cost();
 			bestPath = i.path();
 		}
-		else if(fit(omega, costMin, i) < fit(omega, costMin, population.get(0))){
+		else if(fitness(i) < fitness(population.get(0))){
 			population.add(0,i);
 			if(i.cost() < costMin){
 				costMin = i.cost();
@@ -37,7 +34,7 @@ public class Population{
 			boolean isAdded = false;
 			int j = 1;
 			while(j < population.size() && isAdded == false){
-				if(fit(omega, costMin, i) > fit(omega, costMin, population.get(j-1)) && fit(omega, costMin, i) < fit(omega, costMin, population.get(j))){
+				if(fitness(i) > fitness(population.get(j-1)) && fitness(i) < fitness(population.get(j))){
 					population.add(j,i);
 					if(population.get(j).cost() < costMin){
 						costMin = population.get(j).cost();
@@ -74,7 +71,7 @@ public class Population{
 			population.remove(i);
 		}
 		for(int i = population.size()+5; i < population.size(); i++){
-			if(RandomUtils.getRandomEvent(Math.pow(fit(omega, costMin, population.get(i)),2)) == true){
+			if(RandomUtils.getRandomEvent(Math.pow(fitness(population.get(i)),2)) == true){
 				population.remove(i);
 			}
 		}
@@ -82,7 +79,7 @@ public class Population{
 
 	//returns the fitness of individual i in the population;
 	public double fitness(Individual i){
-		return fit(omega, costMin, i);
+		return (omega + (Math.pow((costMin/i.cost()),2)))/(1+(2*omega));
 	}
 
 	//returns a copy of the best path ever present in an Individual in this population
