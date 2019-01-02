@@ -1,0 +1,119 @@
+import java.util.ArrayList;
+
+public class Population {
+	
+	/*
+	 * Attrubutes.
+	 */
+
+	private ArrayList<Individual> population;
+	private City[] bestPath;
+	private double omega, costMin;
+
+	/*
+	 * Constructor.
+	 */
+
+	public Population(double omega) {
+		costMin = Double.MAX_VALUE;
+		this.omega = omega;
+		population = new ArrayList<>(0);
+	}
+
+	/*
+	 * Adds the individual to the population. If its path cost is the lowest ever seen,
+	 * that cost and path are saved as the new lowest.
+	 */
+
+	public void add(Individual i) {
+		if(i.cost() < costMin) {
+			costMin = i.cost();
+			bestPath = i.path();
+		}
+		population.add(i);
+	}
+
+	/*
+	 * Returns the size of this population.
+	 */
+
+	public int size() {
+		return population.size();
+	}
+
+	/*
+	 * Returns true if the population contains the individual.
+	 */
+
+	public boolean contains(Individual i) {
+		return population.contains(i);
+	}
+
+	/*
+	 * Removes the individual from the population.
+	 */
+
+	public void remove(Individual i) {
+		population.remove(i);
+	}
+
+	/*
+	 * Returns the fitness of this individual.
+	 */
+
+	public double fitness(Individual i) {
+		return (omega + Math.pow((costMin / i.cost()), 2)) / (1 + 2 * omega);
+	}
+
+	/*
+	 * Returns a copy of the best path ever in the population.
+	 */
+
+	public City[] bestPath() {
+		return bestPath;
+	}
+
+	/*
+	 * Models an epidemic.
+	 */
+
+	public void epidemic() {
+		ArrayList<Individual> temp = new ArrayList<>();
+		//moves the five fittest to the temp list.
+		for(int i = 0; i < 5; i++) {
+			temp.add(fittestIndividual());
+		}
+		//adds the remaining n-5 individuals to the temporary array, if they survive the epidemic.
+		for(int i = 0; i < size() - 5; i++) {
+			if(RandomUtils.getRandomEvent(Math.pow(fitness(population.get(i)),2)))
+				temp.add(population.get(i));
+		}
+		population = temp; 
+	}
+
+	//Helper method that returns the fittest individual, removing him from current population.
+
+	private Individual fittestIndividual() {
+		double lowestCost = population.get(0).cost();
+		int indexOfLowestCost = 0;
+		for(Individual i : population) {
+			if(i.cost() < lowestCost) {
+				lowestCost = i.cost();
+				indexOfLowestCost = population.indexOf(i);
+			}	
+		}
+		return population.remove(indexOfLowestCost);
+	}
+
+	/*
+	 * Returns a textual representation of the cost for each individual. 
+	 */
+
+	public String toString() {
+		String output = "";
+		for(Individual i : population)
+			output = output + i.cost() + "\n";
+		return output;
+	}
+
+}
