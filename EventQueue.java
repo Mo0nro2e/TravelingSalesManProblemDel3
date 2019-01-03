@@ -2,20 +2,21 @@ import java.util.ArrayList;
 import java.util.Iterator;
 public class EventQueue implements Iterable<Event>  {
 	private class EventQueueIterator implements Iterator<Event> {
+		//Attributes
 		private int index = 0;
 
 
-	  // The next three methods implement Iterator.
+	  // Checks if there are any more events in the queue
 	  public boolean hasNext() {
 	    if (index < EventQueue.this.eventQueue.size()){
 	      return true;
 	    }
 	    return false;
 	  }
-
+		//returns the next event in the queue
 	  public Event next() {
 	    if (hasNext() == false)
-	      System.out.println("No more elementes");
+	      System.out.println("No more events");
 	    index++;
 	    return EventQueue.this.eventQueue.get(index - 1);
 	  }
@@ -39,7 +40,8 @@ public class EventQueue implements Iterable<Event>  {
 			eventQueue.add(0,e);
 		}
 
-		else{
+
+		else if(eventQueue.get(eventQueue.size()-1).time() > e.time()) {
 			int i = 1;
 			boolean isAdded = false;
 			while (i < eventQueue.size() && isAdded == false){
@@ -50,6 +52,11 @@ public class EventQueue implements Iterable<Event>  {
 				i ++;
 			}
 		}
+
+		else{
+		 eventQueue.add(e);
+		}
+
 	}
 	//returns the next event in the queue and removes it
 	public Event next(){
@@ -58,7 +65,11 @@ public class EventQueue implements Iterable<Event>  {
 
 	//Checks if the queue has more events
 	public boolean hasNext(){
-		return eventQueue.isEmpty();
+		if (eventQueue.isEmpty() == false){
+			return true;
+		}
+		else
+			return false;
 	}
 
 	// This method implements Iterable.
