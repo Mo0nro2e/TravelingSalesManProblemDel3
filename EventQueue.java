@@ -65,7 +65,7 @@ public class EventQueue implements Iterable<Event>  {
 
 	//Checks if the queue has more events
 	public boolean hasNext(){
-		if (eventQueue.isEmpty() == false){
+		if (!eventQueue.isEmpty()){
 			return true;
 		}
 		else
@@ -76,12 +76,4 @@ public class EventQueue implements Iterable<Event>  {
 	public Iterator<Event> iterator() {
 		return new EventQueueIterator();
 	}
-
-
-
-
-
-
-
-
 }
